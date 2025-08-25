@@ -1,47 +1,30 @@
-# Task List Management
+# Autonomous Task Management Protocol
 
-Guidelines for managing task lists in markdown files to track progress on completing a PRD
+This document outlines the protocol for an autonomous agent to manage and execute tasks from a markdown-based task list.
 
-## Task Implementation
-- **One sub-task at a time:** Do **NOT** start the next sub‑task until you ask the user for permission and they say "yes" or "y"
-- **Completion protocol:**  
-  1. When you finish a **sub‑task**, immediately mark it as completed by changing `[ ]` to `[x]`.
-  2. If **all** subtasks underneath a parent task are now `[x]`, follow this sequence:
-    - **First**: Run the full test suite (`pytest`, `npm test`, `bin/rails test`, etc.)
-    - **Only if all tests pass**: Stage changes (`git add .`)
-    - **Clean up**: Remove any temporary files and temporary code before committing
-    - **Commit**: Use a descriptive commit message that:
-      - Uses conventional commit format (`feat:`, `fix:`, `refactor:`, etc.)
-      - Summarizes what was accomplished in the parent task
-      - Lists key changes and additions
-      - References the task number and PRD context
-      - **Formats the message as a single-line command using `-m` flags**, e.g.:
+## Core Directives
 
-        ```
-        git commit -m "feat: add payment validation logic" -m "- Validates card type and expiry" -m "- Adds unit tests for edge cases" -m "Related to T123 in PRD"
-        ```
-  3. Once all the subtasks are marked completed and changes have been committed, mark the **parent task** as completed.
-- Stop after each sub‑task and wait for the user's go‑ahead.
+- **Focus on a single parent task:** You are assigned one parent task at a time. Complete all of its sub-tasks before moving on. Do not work on tasks you are not assigned to.
+- **Autonomy within a parent task:** You have the authority to complete all sub-tasks under your assigned parent task without seeking approval for each one.
+- **Sequential sub-task execution:** Complete sub-tasks in the order they are listed. Mark each sub-task as complete (`[x]`) immediately upon finishing it.
+
+## Completion Protocol for a Parent Task
+
+1.  **Verify all sub-tasks are complete:** Before proceeding, ensure every sub-task under the current parent task is marked with `[x]`.
+2.  **Run tests:** Execute the entire test suite for the project (e.g., `pytest`, `npm test`, `bin/rails test`).
+3.  **Commit changes:** If all tests pass, commit the changes. The commit message should be descriptive and follow the conventional commit format.
+    - Summarize the accomplishments of the parent task.
+    - List key changes.
+    - Reference the parent task.
+    - Format the message as a single-line command using `-m` flags, e.g.:
+      ```
+      git commit -m "feat: implement user authentication" -m "- Add login and registration endpoints" -m "- Include password hashing and JWT generation" -m "Completes: Task 1"
+      ```
+4.  **Mark parent task as complete:** After committing, mark the parent task as `[x]`.
+5.  **Create a Pull Request:** Once the parent task is complete and committed, create a pull request.
+6.  **Await approval:** After creating the PR, halt execution and await approval from a human reviewer. Do not proceed with new tasks until the current PR is approved and merged.
 
 ## Task List Maintenance
 
-1. **Update the task list as you work:**
-   - Mark tasks and subtasks as completed (`[x]`) per the protocol above.
-   - Add new tasks as they emerge.
-
-2. **Maintain the "Relevant Files" section:**
-   - List every file created or modified.
-   - Give each file a one‑line description of its purpose.
-
-## AI Instructions
-
-When working with task lists, the AI must:
-
-1. Regularly update the task list file after finishing any significant work.
-2. Follow the completion protocol:
-   - Mark each finished **sub‑task** `[x]`.
-   - Mark the **parent task** `[x]` once **all** its subtasks are `[x]`.
-3. Add newly discovered tasks.
-4. Keep "Relevant Files" accurate and up to date.
-5. Before starting work, check which sub‑task is next.
-6. After implementing a sub‑task, update the file and then pause for user approval.
+- **Keep the list updated:** Continuously update the task list file as you complete sub-tasks and parent tasks.
+- **Log relevant files:** Maintain a "Relevant Files" section, listing every file you create or modify with a brief description of its role.
